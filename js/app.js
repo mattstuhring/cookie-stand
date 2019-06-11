@@ -4,7 +4,7 @@
 var locationsContainer = document.getElementById('locations-container');
 
 // Hours of operation 6am - 8pm
-var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+var hoursOfOperation = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
 // **********************************************************************
 // Location - 1st and Alki
@@ -31,7 +31,7 @@ for (var i = 0; i < hoursOfOperation.length; i++) {
   // Number of cookies per hour; round to nearest whole number
   var cookies = Math.round(customers * location1stAndAlki.avgCookiesPerCustomer);
 
-  // Formatted cookies per hour. ex "6am: 24 cookies"
+  // Formatted cookies per hour. ex "7am: 24 cookies"
   var result = `${hoursOfOperation[i]}: ${cookies} cookies`;
 
   // Add result to object property "cookiesSoldPerHour"
@@ -81,6 +81,11 @@ for (i = 0; i < location1stAndAlki.cookiesSoldPerHour.length; i++) {
   // Append li to the undordered list
   location1stAndAlkiUlEl.appendChild(location1stAndAlkiLiEl);
 }
+
+// Display total cookies as the last list element
+var lastLiEl = document.createElement('li');
+lastLiEl.textContent = `Total: ${location1stAndAlki.totalCookiesSold}`;
+location1stAndAlkiUlEl.appendChild(lastLiEl);
 
 // **********************************************************************
 // Location - SeaTac Airport
@@ -158,6 +163,11 @@ for (i = 0; i < locationSeaTacAirport.cookiesSoldPerHour.length; i++) {
   locationSeaTacAirportUlEl.appendChild(locationSeaTacAirportLiEl);
 }
 
+// Display total cookies as the last list element
+lastLiEl = document.createElement('li');
+lastLiEl.textContent = `Total: ${locationSeaTacAirport.totalCookiesSold}`;
+locationSeaTacAirportUlEl.appendChild(lastLiEl);
+
 // **********************************************************************
 // Location - Seattle Center
 // **********************************************************************
@@ -233,6 +243,11 @@ for (i = 0; i < locationSeattleCenter.cookiesSoldPerHour.length; i++) {
   // Append li to the undordered list
   locationSeattleCenterUlEl.appendChild(locationSeattleCenterLiEl);
 }
+
+// Display total cookies as the last list element
+lastLiEl = document.createElement('li');
+lastLiEl.textContent = `Total: ${locationSeattleCenter.totalCookiesSold}`;
+locationSeattleCenterUlEl.appendChild(lastLiEl);
 
 // **********************************************************************
 // Location - Capitol Hill
@@ -310,6 +325,11 @@ for (i = 0; i < locationCapitolHill.cookiesSoldPerHour.length; i++) {
   locationCapitolHillUlEl.appendChild(locationCapitolHillLiEl);
 }
 
+// Display total cookies as the last list element
+lastLiEl = document.createElement('li');
+lastLiEl.textContent = `Total: ${locationCapitolHill.totalCookiesSold}`;
+locationCapitolHillUlEl.appendChild(lastLiEl);
+
 // **********************************************************************
 // Location - Alki
 // **********************************************************************
@@ -384,3 +404,8 @@ for (i = 0; i < locationAlki.cookiesSoldPerHour.length; i++) {
   // Append li to the undordered list
   locationAlkiUlEl.appendChild(locationAlkiLiEl);
 }
+
+// Display total cookies as the last list element
+lastLiEl = document.createElement('li');
+lastLiEl.textContent = `Total: ${locationAlki.totalCookiesSold}`;
+locationAlkiUlEl.appendChild(lastLiEl);
