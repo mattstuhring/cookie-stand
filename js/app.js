@@ -12,7 +12,14 @@ var allLocationsArray = [];
 // **********************************************************
 // Constructor - Locations
 // **********************************************************
-var Location = function(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, totalCookiesSoldPerHour, totalCookiesSold) {
+var LocationStore = function(
+  name,
+  minHourlyCustomers,
+  maxHourlyCustomers,
+  avgCookiesPerCustomer,
+  totalCookiesSoldPerHour,
+  totalCookiesSold
+) {
   this.name = name;
   this.minHourlyCustomers = minHourlyCustomers;
   this.maxHourlyCustomers = maxHourlyCustomers;
@@ -23,13 +30,13 @@ var Location = function(name, minHourlyCustomers, maxHourlyCustomers, avgCookies
 
 // Generates random number between maxHourlyCustomers & minHourlyCustomers
 // The max & min are inclusive;
-Location.prototype.calculateNumberOfCustomers = function() {
+LocationStore.prototype.calculateNumberOfCustomers = function() {
   return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
 };
 
 // Number of cookies per hour; round to nearest whole number
 // Save data to totalCookiesSoldPerHour array
-Location.prototype.calculateCookiesSoldPerHour = function() {
+LocationStore.prototype.calculateCookiesSoldPerHour = function() {
   // Generate random number of customers
   var customersPerHour = this.calculateNumberOfCustomers();
 
@@ -40,13 +47,13 @@ Location.prototype.calculateCookiesSoldPerHour = function() {
 };
 
 // Calculate how many cookies were sold during the hours of operations (6am - 8am)
-Location.prototype.calculateTotalCookiesSold = function(cookies) {
+LocationStore.prototype.calculateTotalCookiesSold = function(cookies) {
   this.totalCookiesSold += cookies;
 };
 
 // Data - Create store data for location
 // ----------------------------------------------------------
-Location.prototype.makeData = function() {
+LocationStore.prototype.makeData = function() {
   for (var i = 0; i < hoursOfOperation.length; i++) {
     // Number of cookies per hour; round to nearest whole number
     var cookies = this.calculateCookiesSoldPerHour();
@@ -111,7 +118,7 @@ function createTableCookiesPerHourTd() {
 }
 
 // Caluclation Hourly totals of cookies sold between all locations
-function calculateAllLocationsCookiesPerHour() {  
+function calculateAllLocationsCookiesPerHour() {
   var count = 1;
   var calcArr = [];
   var multiArr = [];
@@ -194,11 +201,11 @@ function createTableDomElements() {
 // Create the locations data and store the data in the allLocationsArray
 function locationCreator() {
   var locations = [
-    new Location('1st and Alki', 23, 65, 6.3, [], 0),
-    new Location('SeaTac Airport', 3, 24, 1.2, [], 0),
-    new Location('Seattle Center', 11, 38, 3.7, [], 0),
-    new Location('Capitol Hill', 20, 38, 2.3, [], 0),
-    new Location('Alki', 2, 16, 4.6, [], 0)
+    new LocationStore('1st and Alki', 23, 65, 6.3, [], 0),
+    new LocationStore('SeaTac Airport', 3, 24, 1.2, [], 0),
+    new LocationStore('Seattle Center', 11, 38, 3.7, [], 0),
+    new LocationStore('Capitol Hill', 20, 38, 2.3, [], 0),
+    new LocationStore('Alki', 2, 16, 4.6, [], 0)
   ];
 
   for (var i = 0; i < locations.length; i++) {
