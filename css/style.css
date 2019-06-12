@@ -29,7 +29,7 @@ a {
 }
 
 a:hover, a:focus {
-  color: #8be0b9;
+  color: #008000;
   transition: all 1s;
   -webkit-transition: all 1s;
   -o-transition: all 1s;
@@ -54,6 +54,8 @@ header nav span.logo {
   margin-left: 100px;
   font-size: 20px;
   font-family: 'Pacifico', cursive;
+  position: relative;
+  top: 15px;
 }
 
 header nav span.nav-links {
@@ -141,7 +143,7 @@ section.salmon-img img {
 
 table {
   border-collapse: collapse;
-  border-bottom: 2px solid #01cccc;
+  border-bottom: 2px solid #008000;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
      0px 10px 20px rgba(0,0,0,0.05),
      0px 20px 20px rgba(0,0,0,0.05),
@@ -163,7 +165,7 @@ th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #01cccc;
+  background-color: #008000;
   color: white;
 }
 
