@@ -29,7 +29,7 @@ a {
 }
 
 a:hover, a:focus {
-  color: #8be0b9;
+  color: #008000;
   transition: all 1s;
   -webkit-transition: all 1s;
   -o-transition: all 1s;
@@ -42,11 +42,11 @@ nav {
   z-index: 2;
 }
 
-header img {
+header img.waves {
   height: 100px;
   position: absolute;
   width: 103%;
-  bottom: 0px;
+  bottom: 46px;
   z-index: 1;
 }
 
@@ -54,6 +54,8 @@ header nav span.logo {
   margin-left: 100px;
   font-size: 20px;
   font-family: 'Pacifico', cursive;
+  position: relative;
+  top: 15px;
 }
 
 header nav span.nav-links {
@@ -67,6 +69,47 @@ header nav span.nav-links a {
   float: right;
   font-family: 'Pacifico', cursive;
 }
+
+header nav span.nav-links a img {
+  width: 200px;
+}
+
+/* Reference: https://codepen.io/theDeanH/pen/zBZXLN */
+header nav span.nav-links a img:hover {
+  -webkit-animation-name: wiggle;
+  -ms-animation-name: wiggle;
+  -ms-animation-duration: 1000ms;
+  -webkit-animation-duration: 1000ms;
+  -webkit-animation-iteration-count: 1;
+  -ms-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-in-out;
+  -ms-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes wiggle {
+  0% {-webkit-transform: rotate(10deg);}
+  25% {-webkit-transform: rotate(-10deg);}
+  50% {-webkit-transform: rotate(20deg);}
+  75% {-webkit-transform: rotate(-5deg);}
+  100% {-webkit-transform: rotate(0deg);}
+}
+
+@-ms-keyframes wiggle {
+  0% {-ms-transform: rotate(1deg);}
+  25% {-ms-transform: rotate(-1deg);}
+  50% {-ms-transform: rotate(1.5deg);}
+  75% {-ms-transform: rotate(-5deg);}
+  100% {-ms-transform: rotate(0deg);}
+}
+
+@keyframes wiggle {
+  0% {transform: rotate(10deg);}
+  25% {transform: rotate(-10deg);}
+  50% {transform: rotate(20deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0deg);}
+}
+/* Referene - End */
 
 main.intro, main.sales {
   margin-top: 100px;
@@ -100,7 +143,7 @@ section.salmon-img img {
 
 table {
   border-collapse: collapse;
-  border-bottom: 2px solid #01cccc;
+  border-bottom: 2px solid #008000;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
      0px 10px 20px rgba(0,0,0,0.05),
      0px 20px 20px rgba(0,0,0,0.05),
@@ -122,7 +165,7 @@ th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #01cccc;
+  background-color: #008000;
   color: white;
 }
 
