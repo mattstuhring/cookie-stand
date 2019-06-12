@@ -1,411 +1,213 @@
 'use strict';
 
 // Get the container element where I display all locations
-var locationsContainer = document.getElementById('locations-container');
+var locationsTable = document.getElementById('locations-table');
 
 // Hours of operation 6am - 8pm
-var hoursOfOperation = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-// **********************************************************************
-// Location - 1st and Alki
-// **********************************************************************
-var location1stAndAlki = {
-  minHourlyCustomers: 23,
-  maxHourlyCustomers: 65,
-  avgCookiesPerCustomer: 6.3,
-  numberOfCustomers: function() {
-    // Generates random number between maxHourlyCustomers & minHourlyCustomers
-    // The max & min are inclusive;
-    return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
-  },
-  cookiesSoldPerHour: [],
-  totalCookiesSold: 0
+// Store each location object into array
+var allLocationsArray = [];
+
+// **********************************************************
+// Constructor - Locations
+// **********************************************************
+var Location = function(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, totalCookiesSoldPerHour, totalCookiesSold) {
+  this.name = name;
+  this.minHourlyCustomers = minHourlyCustomers;
+  this.maxHourlyCustomers = maxHourlyCustomers;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.totalCookiesSoldPerHour = totalCookiesSoldPerHour;
+  this.totalCookiesSold = totalCookiesSold;
 };
 
-// Data - Create store data for 1st and Alki
-// ----------------------------------------------------------
-for (var i = 0; i < hoursOfOperation.length; i++) {
-  // Number of customers per hour
-  var customers = location1stAndAlki.numberOfCustomers();
-
-  // Number of cookies per hour; round to nearest whole number
-  var cookies = Math.round(customers * location1stAndAlki.avgCookiesPerCustomer);
-
-  // Formatted cookies per hour. ex "7am: 24 cookies"
-  var result = `${hoursOfOperation[i]}: ${cookies} cookies`;
-
-  // Add result to object property "cookiesSoldPerHour"
-  location1stAndAlki.cookiesSoldPerHour.push(result);
-
-  // Increment total number of cookies sold
-  location1stAndAlki.totalCookiesSold += cookies;
-}
-
-// Log to console for debugging cookie data
-console.log(location1stAndAlki.cookiesSoldPerHour);
-console.log(location1stAndAlki.totalCookiesSold);
-
-// DOM - Add an unordered list populated with store data
-// ----------------------------------------------------------
-// Create section element
-var location1stAndAlkiSectionEl = document.createElement('section');
-
-// Append section element to container
-locationsContainer.appendChild(location1stAndAlkiSectionEl);
-
-// Create h2 element
-var location1stAndAlkiH2El = document.createElement('h2');
-
-// Add location name to h2
-location1stAndAlkiH2El.textContent = '1st and Alki';
-
-// Append h2 to the section element
-location1stAndAlkiSectionEl.appendChild(location1stAndAlkiH2El);
-
-// Create unordered list
-var location1stAndAlkiUlEl = document.createElement('ul');
-
-// Append ul to the container element
-location1stAndAlkiSectionEl.appendChild(location1stAndAlkiUlEl);
-
-// Lets populate some data in that unordered list!
-// ----------------------------------------------------------
-// Iterate through array of data located in property cookiesSoldPerHour
-for (i = 0; i < location1stAndAlki.cookiesSoldPerHour.length; i++) {
-  // Create a new list item (li)
-  var location1stAndAlkiLiEl = document.createElement('li');
-
-  // Add cookies sold per hour
-  location1stAndAlkiLiEl.textContent = location1stAndAlki.cookiesSoldPerHour[i];
-
-  // Append li to the undordered list
-  location1stAndAlkiUlEl.appendChild(location1stAndAlkiLiEl);
-}
-
-// Display total cookies as the last list element
-var lastLiEl = document.createElement('li');
-lastLiEl.textContent = `Total: ${location1stAndAlki.totalCookiesSold}`;
-location1stAndAlkiUlEl.appendChild(lastLiEl);
-
-// **********************************************************************
-// Location - SeaTac Airport
-// **********************************************************************
-var locationSeaTacAirport = {
-  minHourlyCustomers: 3,
-  maxHourlyCustomers: 24,
-  avgCookiesPerCustomer: 1.2,
-  numberOfCustomers: function() {
-    // Generates random number between maxHourlyCustomers & minHourlyCustomers
-    // The max & min are inclusive;
-    return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
-  },
-  cookiesSoldPerHour: [],
-  totalCookiesSold: 0
+// Generates random number between maxHourlyCustomers & minHourlyCustomers
+// The max & min are inclusive;
+Location.prototype.calculateNumberOfCustomers = function() {
+  return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
 };
 
-// Data - Create store data for SeaTac Airport
-// ----------------------------------------------------------
-for (i = 0; i < hoursOfOperation.length; i++) {
-  // Number of customers per hour
-  customers = locationSeaTacAirport.numberOfCustomers();
+// Number of cookies per hour; round to nearest whole number
+// Save data to totalCookiesSoldPerHour array
+Location.prototype.calculateCookiesSoldPerHour = function() {
+  // Generate random number of customers
+  var customersPerHour = this.calculateNumberOfCustomers();
 
-  // Number of cookies per hour
-  cookies = Math.round(customers * locationSeaTacAirport.avgCookiesPerCustomer);
+  var cookiesPerHour = Math.round(customersPerHour * this.avgCookiesPerCustomer);
+  this.totalCookiesSoldPerHour.push(cookiesPerHour);
 
-  // Formatted cookies per hour. ex "6am: 24 cookies"
-  result = `${hoursOfOperation[i]}: ${cookies} cookies`;
-
-  // Add result to object property "cookiesSoldPerHour"
-  locationSeaTacAirport.cookiesSoldPerHour.push(result);
-
-  // Increment total number of cookies sold
-  locationSeaTacAirport.totalCookiesSold += cookies;
-}
-
-// Log to the console for debugging cookie data
-console.log(locationSeaTacAirport.cookiesSoldPerHour);
-console.log(locationSeaTacAirport.totalCookiesSold);
-
-// DOM - Add an unordered list populated with store data
-// ----------------------------------------------------------
-// Create section element
-var locationSeaTacAirportSectionEl = document.createElement('section');
-
-// Append section element to container
-locationsContainer.appendChild(locationSeaTacAirportSectionEl);
-
-// Create h2 element
-var locationSeaTacAirportH2El = document.createElement('h2');
-
-// Add location name to h2
-locationSeaTacAirportH2El.textContent = 'SeaTac Airport';
-
-// Append h2 to the container element
-locationSeaTacAirportSectionEl.appendChild(locationSeaTacAirportH2El);
-
-// Create unordered list
-var locationSeaTacAirportUlEl = document.createElement('ul');
-
-// Append ul to the container element
-locationSeaTacAirportSectionEl.appendChild(locationSeaTacAirportUlEl);
-
-// Lets populate some data in that unordered list!
-// ----------------------------------------------------------
-// Iterate through array of data located in property cookiesSoldPerHour
-for (i = 0; i < locationSeaTacAirport.cookiesSoldPerHour.length; i++) {
-  // Create a new list item (li)
-  var locationSeaTacAirportLiEl = document.createElement('li');
-
-  // Add cookies sold per hour
-  locationSeaTacAirportLiEl.textContent = locationSeaTacAirport.cookiesSoldPerHour[i];
-
-  // Append li to the undordered list
-  locationSeaTacAirportUlEl.appendChild(locationSeaTacAirportLiEl);
-}
-
-// Display total cookies as the last list element
-lastLiEl = document.createElement('li');
-lastLiEl.textContent = `Total: ${locationSeaTacAirport.totalCookiesSold}`;
-locationSeaTacAirportUlEl.appendChild(lastLiEl);
-
-// **********************************************************************
-// Location - Seattle Center
-// **********************************************************************
-var locationSeattleCenter = {
-  minHourlyCustomers: 11,
-  maxHourlyCustomers: 38,
-  avgCookiesPerCustomer: 3.7,
-  numberOfCustomers: function() {
-    // Generates random number between maxHourlyCustomers & minHourlyCustomers
-    // The max & min are inclusive;
-    return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
-  },
-  cookiesSoldPerHour: [],
-  totalCookiesSold: 0
+  return cookiesPerHour;
 };
 
-// Data - Create store data for Seattle Center
-// ----------------------------------------------------------
-for (i = 0; i < hoursOfOperation.length; i++) {
-  // Number of customers per hour
-  customers = locationSeattleCenter.numberOfCustomers();
-
-  // Number of cookies per hour
-  cookies = Math.round(customers * locationSeattleCenter.avgCookiesPerCustomer);
-
-  // Formatted cookies per hour. ex "6am: 24 cookies"
-  result = `${hoursOfOperation[i]}: ${cookies} cookies`;
-
-  // Add result to object property "cookiesSoldPerHour"
-  locationSeattleCenter.cookiesSoldPerHour.push(result);
-
-  // Increment total number of cookies sold
-  locationSeattleCenter.totalCookiesSold += cookies;
-}
-
-// Log to console for debugging cookie data
-console.log(locationSeattleCenter.cookiesSoldPerHour);
-console.log(locationSeattleCenter.totalCookiesSold);
-
-// DOM - Add an unordered list populated with store data
-// ----------------------------------------------------------
-// Create section element
-var locationSeattleCenterSectionEl = document.createElement('section');
-
-// Append section element to container
-locationsContainer.appendChild(locationSeattleCenterSectionEl);
-
-// Create h2 element
-var locationSeattleCenterH2El = document.createElement('h2');
-
-// Add location name to h2
-locationSeattleCenterH2El.textContent = 'Seattle Center';
-
-// Append h2 to the container element
-locationSeattleCenterSectionEl.appendChild(locationSeattleCenterH2El);
-
-// Create unordered list
-var locationSeattleCenterUlEl = document.createElement('ul');
-
-// Append ul to the container element
-locationSeattleCenterSectionEl.appendChild(locationSeattleCenterUlEl);
-
-// Lets populate some data in that unordered list!
-// ----------------------------------------------------------
-// Iterate through array of data located in property cookiesSoldPerHour
-for (i = 0; i < locationSeattleCenter.cookiesSoldPerHour.length; i++) {
-  // Create a new list item (li)
-  var locationSeattleCenterLiEl = document.createElement('li');
-
-  // Add cookies sold per hour
-  locationSeattleCenterLiEl.textContent = locationSeattleCenter.cookiesSoldPerHour[i];
-
-  // Append li to the undordered list
-  locationSeattleCenterUlEl.appendChild(locationSeattleCenterLiEl);
-}
-
-// Display total cookies as the last list element
-lastLiEl = document.createElement('li');
-lastLiEl.textContent = `Total: ${locationSeattleCenter.totalCookiesSold}`;
-locationSeattleCenterUlEl.appendChild(lastLiEl);
-
-// **********************************************************************
-// Location - Capitol Hill
-// **********************************************************************
-var locationCapitolHill = {
-  minHourlyCustomers: 20,
-  maxHourlyCustomers: 38,
-  avgCookiesPerCustomer: 2.3,
-  numberOfCustomers: function() {
-    // Generates random number between maxHourlyCustomers & minHourlyCustomers
-    // The max & min are inclusive;
-    return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
-  },
-  cookiesSoldPerHour: [],
-  totalCookiesSold: 0
+// Calculate how many cookies were sold during the hours of operations (6am - 8am)
+Location.prototype.calculateTotalCookiesSold = function(cookies) {
+  this.totalCookiesSold += cookies;
 };
 
-// Data - Create store data for Capitol Hill
+// Data - Create store data for location
 // ----------------------------------------------------------
-for (i = 0; i < hoursOfOperation.length; i++) {
-  // Number of customers per hour
-  customers = locationCapitolHill.numberOfCustomers();
+Location.prototype.makeData = function() {
+  for (var i = 0; i < hoursOfOperation.length; i++) {
+    // Number of cookies per hour; round to nearest whole number
+    var cookies = this.calculateCookiesSoldPerHour();
 
-  // Number of cookies per hour
-  cookies = Math.round(customers * locationCapitolHill.avgCookiesPerCustomer);
-
-  // Formatted cookies per hour. ex "6am: 24 cookies"
-  result = `${hoursOfOperation[i]}: ${cookies} cookies`;
-
-  // Add result to object property "cookiesSoldPerHour"
-  locationCapitolHill.cookiesSoldPerHour.push(result);
-
-  // Increment total number of cookies sold
-  locationCapitolHill.totalCookiesSold += cookies;
-}
-
-// Log to console for debugging cookie data
-console.log(locationCapitolHill.cookiesSoldPerHour);
-console.log(locationCapitolHill.totalCookiesSold);
-
-// DOM - Add an unordered list populated with store data
-// ----------------------------------------------------------
-// Create section element
-var locationCapitolHillSectionEl = document.createElement('section');
-
-// Append section element to container
-locationsContainer.appendChild(locationCapitolHillSectionEl);
-
-// Create h2 element
-var locationCapitolHillH2El = document.createElement('h2');
-
-// Add location name to h2
-locationCapitolHillH2El.textContent = 'Capitol Hill';
-
-// Append h2 to the container element
-locationCapitolHillSectionEl.appendChild(locationCapitolHillH2El);
-
-// Create unordered list
-var locationCapitolHillUlEl = document.createElement('ul');
-
-// Append ul to the container element
-locationCapitolHillSectionEl.appendChild(locationCapitolHillUlEl);
-
-// Lets populate some data in that unordered list!
-// ----------------------------------------------------------
-// Iterate through array of data located in property cookiesSoldPerHour
-for (i = 0; i < locationCapitolHill.cookiesSoldPerHour.length; i++) {
-  // Create a new list item (li)
-  var locationCapitolHillLiEl = document.createElement('li');
-
-  // Add cookies sold per hour
-  locationCapitolHillLiEl.textContent = locationCapitolHill.cookiesSoldPerHour[i];
-
-  // Append li to the undordered list
-  locationCapitolHillUlEl.appendChild(locationCapitolHillLiEl);
-}
-
-// Display total cookies as the last list element
-lastLiEl = document.createElement('li');
-lastLiEl.textContent = `Total: ${locationCapitolHill.totalCookiesSold}`;
-locationCapitolHillUlEl.appendChild(lastLiEl);
-
-// **********************************************************************
-// Location - Alki
-// **********************************************************************
-var locationAlki = {
-  minHourlyCustomers: 2,
-  maxHourlyCustomers: 16,
-  avgCookiesPerCustomer: 4.6,
-  numberOfCustomers: function() {
-    // Generates random number between maxHourlyCustomers & minHourlyCustomers
-    // The max & min are inclusive;
-    return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
-  },
-  cookiesSoldPerHour: [],
-  totalCookiesSold: 0
+    // Increment total number of cookies sold
+    this.calculateTotalCookiesSold(cookies);
+  }
 };
 
-// Data - Create store data for Alki
-// ----------------------------------------------------------
-for (i = 0; i < hoursOfOperation.length; i++) {
-  // Number of customers per hour
-  customers = locationAlki.numberOfCustomers();
+// Create table headers 6am - 8pm
+function createTableHoursOfOperationTh() {
+  var tableTr, tableTh;
 
-  // Number of cookies per hour
-  cookies = Math.round(customers * locationAlki.avgCookiesPerCustomer);
+  // Create table row (tr) element
+  tableTr = document.createElement('tr');
+  locationsTable.appendChild(tableTr);
 
-  // Formatted cookies per hour. ex "6am: 24 cookies"
-  result = `${hoursOfOperation[i]}: ${cookies} cookies`;
+  // Create empty header element
+  tableTh = document.createElement('th');
+  tableTr.appendChild(tableTh);
 
-  // Add result to object property "cookiesSoldPerHour"
-  locationAlki.cookiesSoldPerHour.push(result);
+  // Iterate through hours of operation to create table header (th) elements displaying 6am - 8pm
+  for (var i = 0; i < hoursOfOperation.length; i++) {
+    tableTh = document.createElement('th');
+    tableTh.textContent = hoursOfOperation[i];
+    tableTr.appendChild(tableTh);
+  }
 
-  // Increment total number of cookies sold
-  locationAlki.totalCookiesSold += cookies;
+  // Create Totals column
+  tableTh = document.createElement('th');
+  tableTh.textContent = 'Daily Location Total';
+  tableTr.appendChild(tableTh);
 }
 
-console.log(locationAlki.cookiesSoldPerHour);
-console.log(locationAlki.totalCookiesSold);
+// Create table Locaton data; Cookies per hour of operation
+function createTableCookiesPerHourTd() {
+  var tableTd, tableTr;
 
-// DOM - Add an unordered list populated with store data
-// ----------------------------------------------------------
-// Create section element
-var locationAlkiSectionEl = document.createElement('section');
+  // Iterate through to populate table data rows
+  for (var j = 0; j < allLocationsArray.length; j++) {
+    // Create new tr
+    tableTr = document.createElement('tr');
+    locationsTable.appendChild(tableTr);
 
-// Append section element to container
-locationsContainer.appendChild(locationAlkiSectionEl);
+    // Add new td for location name
+    tableTd = document.createElement('td');
+    tableTd.textContent = allLocationsArray[j].name;
+    tableTr.appendChild(tableTd);
 
-// Create h2 element
-var locationAlkiH2El = document.createElement('h2');
+    // Add new td for each cookies sold per hour data point
+    for (var k = 0; k < allLocationsArray[j].totalCookiesSoldPerHour.length; k++) {
+      tableTd = document.createElement('td');
+      tableTd.textContent = allLocationsArray[j].totalCookiesSoldPerHour[k];
+      tableTr.appendChild(tableTd);
+    }
 
-// Add location name to h2
-locationAlkiH2El.textContent = 'Alki';
-
-// Append h2 to the container element
-locationAlkiSectionEl.appendChild(locationAlkiH2El);
-
-// Create unordered list
-var locationAlkiUlEl = document.createElement('ul');
-
-// Append ul to the container element
-locationAlkiSectionEl.appendChild(locationAlkiUlEl);
-
-// Lets populate some data in that unordered list!
-// ----------------------------------------------------------
-// Iterate through array of data located in property cookiesSoldPerHour
-for (i = 0; i < locationAlki.cookiesSoldPerHour.length; i++) {
-  // Create a new list item (li)
-  var locationAlkiLiEl = document.createElement('li');
-
-  // Add cookies sold per hour
-  locationAlkiLiEl.textContent = locationAlki.cookiesSoldPerHour[i];
-
-  // Append li to the undordered list
-  locationAlkiUlEl.appendChild(locationAlkiLiEl);
+    // Add new td for "Daily Location Total"
+    tableTd = document.createElement('td');
+    tableTd.textContent = allLocationsArray[j].totalCookiesSold;
+    tableTr.appendChild(tableTd);
+  }
 }
 
-// Display total cookies as the last list element
-lastLiEl = document.createElement('li');
-lastLiEl.textContent = `Total: ${locationAlki.totalCookiesSold}`;
-locationAlkiUlEl.appendChild(lastLiEl);
+// Caluclation Hourly totals of cookies sold between all locations
+function calculateAllLocationsCookiesPerHour() {  
+  var count = 1;
+  var calcArr = [];
+  var multiArr = [];
+  var sum = [];
+  var total = 0;
+  var completeTotal = 0;
+
+  // Create array of empty arrays. ex. [[], [], []]
+  while (count <= allLocationsArray[0].totalCookiesSoldPerHour.length) {
+    calcArr.push([]);
+    count++;
+  }
+
+  // Store each location cookie data inside an array
+  for (var l = 0; l < allLocationsArray.length; l++) {
+    multiArr.push(allLocationsArray[l].totalCookiesSoldPerHour);
+  }
+
+  // Store arrays with the hourly cookies sold from all locations
+  // ex. [[1,2,3], [4,5,6], [7,8,9]] -> [[1,4,7], [2,5,8], [3,6,9]]
+  for (var m = 0; m < multiArr.length; m++) {
+    for (var n = 0; n < multiArr[m].length; n++) {
+      calcArr[n].push(multiArr[m][n]);
+    }
+  }
+
+  // Sum totals from the array of arrays containing hourly cookies sold from all locations 
+  for (m = 0; m < calcArr.length; m++) {
+    for (n = 0; n < calcArr[m].length; n++) {
+      console.log(calcArr[m][n]);
+      total += calcArr[m][n];
+      completeTotal += calcArr[m][n];
+    }
+
+    sum.push(total);
+    total = 0;
+  }
+
+  return [sum, completeTotal];
+}
+
+// Create table totals td
+function createTableTotalsTd() {
+  var tableTr, tableTd;
+  // Hourly totals from all locations
+  // Create new tr
+  tableTr = document.createElement('tr');
+  locationsTable.appendChild(tableTr);
+
+  // Add new td for location name
+  tableTd = document.createElement('td');
+  tableTd.textContent = 'Totals';
+  tableTr.appendChild(tableTd);
+
+  var sum = calculateAllLocationsCookiesPerHour()[0];
+  var completeTotal = calculateAllLocationsCookiesPerHour()[1];
+
+  // Add totals to the last row
+  for (var i = 0; i < sum.length; i++) {
+    tableTd = document.createElement('td');
+    tableTd.textContent = sum[i];
+    tableTr.appendChild(tableTd);
+  }
+
+  // Add Daily Location Total
+  tableTd = document.createElement('td');
+  tableTd.textContent = completeTotal;
+  tableTr.appendChild(tableTd);
+}
+
+// Let's put our DOM functions into work!
+function createTableDomElements() {
+  createTableHoursOfOperationTh();
+
+  createTableCookiesPerHourTd();
+
+  createTableTotalsTd();
+}
+
+// Create the locations data and store the data in the allLocationsArray
+function locationCreator() {
+  var locations = [
+    new Location('1st and Alki', 23, 65, 6.3, [], 0),
+    new Location('SeaTac Airport', 3, 24, 1.2, [], 0),
+    new Location('Seattle Center', 11, 38, 3.7, [], 0),
+    new Location('Capitol Hill', 20, 38, 2.3, [], 0),
+    new Location('Alki', 2, 16, 4.6, [], 0)
+  ];
+
+  for (var i = 0; i < locations.length; i++) {
+    locations[i].makeData();
+    allLocationsArray.push(locations[i]);
+  }
+
+  createTableDomElements();
+}
+
+// Call the location creator function!
+locationCreator();
