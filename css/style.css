@@ -214,3 +214,7 @@ footer span:nth-child(3) {
   font-family: 'Pacifico', cursive;
   margin-right: 75px;
 }
+
+form {
+  margin-bottom: 500px;
+}
