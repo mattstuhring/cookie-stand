@@ -13,7 +13,9 @@
       <!-- Navigation links -->
       <nav>
         <span class="logo">
-          <a href="index.html">Cookie Stand</a>
+          <a href="index.html">
+            <img src="./img/sign.png" alt="sign with logo">
+          </a>
         </span>
         <span class="nav-links">
           <a href="sales.html">
@@ -33,10 +35,29 @@
       <h1>Sales</h1>
     </main>
 
-    <!-- Container to display store data -->
-    <table id="locations-table">
+    <section class="store-container">
+      <form id="store">
+        <fieldset>
+          <legend>Add Store</legend>
+          <label for="name">Name</label>
+          <input type="text" name="name" required>
+  
+          <label for="min">Minimum Customers Per Hour</label>
+          <input type="text" name="min" required>
+  
+          <label for="max">Maximum Customers Per Hour</label>
+          <input type="text" name="max" required>
+  
+          <label for="avg">Average Cookies Per Customer</label>
+          <input type="text" name="avg" required>
+  
+          <button type="submit">Submit</button>
+        </fieldset>
+      </form>
+    </section>
 
-    </table>
+    <!-- Container to display store data -->
+    <table id="locations-table"></table>
 
     <!-- Footer -->
     <footer>

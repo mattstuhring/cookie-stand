@@ -7,9 +7,7 @@ var locationsTable = document.getElementById('locations-table');
 var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
 // Store each location object into array
-// var allLocationsArray = [];
-
-
+var allLocationsArray = [];
 
 // **********************************************************
 // Constructor - Locations
@@ -28,10 +26,7 @@ var LocationStore = function(
   this.avgCookiesPerCustomer = avgCookiesPerCustomer;
   this.totalCookiesSoldPerHour = totalCookiesSoldPerHour;
   this.totalCookiesSold = totalCookiesSold;
-  LocationStore.allLocationsArray.push(this);
 };
-
-LocationStore.allLocationsArray = [];
 
 // Generates random number between maxHourlyCustomers & minHourlyCustomers
 // The max & min are inclusive;
@@ -75,7 +70,6 @@ function createTableHoursOfOperationTh() {
   // Create table row (tr) element
   tableTr = document.createElement('tr');
   locationsTable.appendChild(tableTr);
-  console.log('hello from 75');
   // Create empty header element
   tableTh = document.createElement('th');
   tableTr.appendChild(tableTh);
@@ -153,7 +147,6 @@ function calculateAllLocationsCookiesPerHour() {
   // Sum totals from the array of arrays containing hourly cookies sold from all locations 
   for (m = 0; m < calcArr.length; m++) {
     for (n = 0; n < calcArr[m].length; n++) {
-      console.log(calcArr[m][n]);
       total += calcArr[m][n];
       completeTotal += calcArr[m][n];
     }
@@ -194,22 +187,14 @@ function createTableTotalsTd() {
   tableTr.appendChild(tableTd);
 }
 
-
-
-
-
-
-
 // Let's put our DOM functions into work!
 function createTableDomElements() {
- 
+
   createTableHoursOfOperationTh();
 
   createTableCookiesPerHourTd();
 
   createTableTotalsTd();
-
-
 }
 
 // Create the locations data and store the data in the allLocationsArray
@@ -224,12 +209,75 @@ function locationCreator() {
 
   for (var i = 0; i < locations.length; i++) {
     locations[i].makeData();
-    LocationStore.allLocationsArray.push(locations[i]);
+    allLocationsArray.push(locations[i]);
   }
 
   createTableDomElements();
 }
 
-// Call the location creator function!
-locationCreator();
+// **********************************************************
+// Constructor - Store
+// **********************************************************
+var Store = function(name, min, max, avg){
+  this.name = name;
+  this.min = min;
+  this.max = max;
+  this.avg = avg;
+};
 
+// Save the form element in a variable
+var storeForm = document.getElementById('store');
+
+// Add eventlistener to the form
+storeForm.addEventListener('submit', function(event){
+  event.preventDefault();
+
+  // Save all the form inputs
+  var name = event.target.name.value;
+  var min = parseInt(event.target.min.value);
+  var max = parseInt(event.target.max.value);
+  var avg = parseInt(event.target.avg.value);
+
+  // Form validation!!!!!
+  if (name === '' || typeof name !== 'string') {
+    alert('Please enter a valid string');
+    return;
+  }
+
+  if (min < 0 || typeof min !== 'number' || min >= max) {
+    alert('Please enter number greater or equal to 0 and must be less than maximum');
+    return;
+  }
+
+  if (max < 0 || typeof max !== 'number' || max <= min) {
+    alert('Please enter number greater than the minimum');
+    return;
+  }
+
+  if (avg <= 0 || typeof avg !== 'number') {
+    alert('Please enter a number greater than 0');
+    return;
+  }
+
+  // Create new Store objec from the new form data
+  var formData = new Store(name, min, max, avg);
+
+  // Create a new store
+  var newStore = new LocationStore(formData.name, formData.min, formData.max, formData.avg, [], 0);
+  newStore.makeData(); // Create store data; Cookies sold per hour ...
+
+  // Add new store to the global all locations array
+  allLocationsArray.push(newStore);
+
+  // Remove the table from the DOM
+  locationsTable.innerHTML = '';
+
+  // Clear all form inputs
+  storeForm.reset();
+
+  // Display the new table to the DOM
+  createTableDomElements();
+});
+
+// Call the location creator function to create DOM elements!
+locationCreator();
