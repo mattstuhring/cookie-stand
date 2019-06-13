@@ -50,12 +50,11 @@ header img.waves {
   z-index: 1;
 }
 
-header nav span.logo {
-  margin-left: 100px;
-  font-size: 20px;
-  font-family: 'Pacifico', cursive;
-  position: relative;
-  top: 15px;
+header nav span.logo img {
+  position: absolute;
+  width: 130px;
+  bottom: -46px;
+  left: 74px;
 }
 
 header nav span.nav-links {
@@ -75,7 +74,7 @@ header nav span.nav-links a img {
 }
 
 /* Reference: https://codepen.io/theDeanH/pen/zBZXLN */
-header nav span.nav-links a img:hover {
+header nav span.nav-links a img:hover, header nav span.logo img:hover {
   -webkit-animation-name: wiggle;
   -ms-animation-name: wiggle;
   -ms-animation-duration: 1000ms;
@@ -136,9 +135,52 @@ section.salmon-img img {
   margin-right: auto;
 }
 
+section.locations {
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+  margin-top: 40px;
+  text-align: center;
+}
+
 #locations-table {
   margin: 0 auto;
   width: 75%;
+  margin-bottom: 200px;
+}
+
+section #store {
+  margin: 0 auto;
+  width: 75%;
+  text-align: center;
+}
+
+section.store-container {
+  margin-bottom: 40px;
+}
+
+fieldset {
+  margin: 0 auto;
+  display: inline-flex;
+  padding: 20px;
+  border: 2px solid #008000;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+     0px 10px 20px rgba(0,0,0,0.05),
+     0px 20px 20px rgba(0,0,0,0.05),
+     0px 30px 20px rgba(0,0,0,0.05);
+}
+
+fieldset label {
+  text-align: left;
+}
+
+fieldset input {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+button {
+  background-color: #008000;
+  color: white;
 }
 
 table {
@@ -213,8 +255,4 @@ footer span.date {
 footer span:nth-child(3) {
   font-family: 'Pacifico', cursive;
   margin-right: 75px;
-}
-
-form {
-  margin-bottom: 500px;
 }
