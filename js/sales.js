@@ -275,9 +275,25 @@ storeForm.addEventListener('submit', function(event){
   // Clear all form inputs
   storeForm.reset();
 
+  toggleDisplayClass.classList.toggle('toggle-form');
+
   // Display the new table to the DOM
   createTableDomElements();
 });
+
+// Toggle - hide & show "add store" form
+var storeLink = document.getElementById('toggle-store-form');
+var toggleDisplayClass = document.querySelector('.store-container');
+
+var handleFormToggle = function(event) {
+  event.preventDefault();
+
+  toggleDisplayClass.classList.toggle('toggle-form');
+};
+
+storeLink.addEventListener('click', handleFormToggle);
+
+
 
 // Call the location creator function to create DOM elements!
 locationCreator();

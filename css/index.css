@@ -10,15 +10,6 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
-header {
-  color: white;
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  width: 100%;
-  padding: 29px;
-}
-
 a {
   color: black;
   text-decoration: none;
@@ -36,7 +27,16 @@ a:hover, a:focus {
   -moz-transition: all 1s;
 }
 
-nav {
+header {
+  color: white;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 100%;
+  padding: 32px;
+}
+
+header nav {
   position: relative;
   bottom: 25px;
   z-index: 2;
@@ -63,14 +63,13 @@ header nav span.nav-links {
 
 header nav span.nav-links a {
   margin-left: 15px;
-  margin-right: 15px;
   font-size: 20px;
   float: right;
   font-family: 'Pacifico', cursive;
 }
 
 header nav span.nav-links a img {
-  width: 200px;
+  width: 160px;
 }
 
 /* Reference: https://codepen.io/theDeanH/pen/zBZXLN */
@@ -110,119 +109,180 @@ header nav span.nav-links a img:hover, header nav span.logo img:hover {
 }
 /* Referene - End */
 
-main.intro, main.sales {
+main.intro {
   margin-top: 100px;
-  text-align: center;
 }
 
-main.intro h2 {
-  font-size: 40px;
+main.intro > h2 {
+  font-size: 50px;
   font-family: 'Lobster', cursive;
   margin-bottom: 0px;
   margin-top: 120px;
+  text-align: center;
 }
 
-main.intro h1, main.sales h1 {
-  font-size: 100px;
+main.intro h1 {
+  font-size: 115px;
   font-family: 'Lobster', cursive;
   margin-top: 0px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 section.salmon-img img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 120px;
+  width: 800px;
 }
 
-section.locations {
-  font-family: 'Lobster', cursive;
-  font-size: 30px;
-  margin-top: 40px;
-  text-align: center;
+section.gallery {
+  margin-top: 90px;
+  margin-bottom: 120px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 720px;
+  width: 940px;
 }
 
-#locations-table {
-  margin: 0 auto;
-  width: 75%;
-  margin-bottom: 200px;
-}
-
-section #store {
-  margin: 0 auto;
-  width: 75%;
-  text-align: center;
-}
-
-section.store-container {
-  margin-bottom: 40px;
-}
-
-fieldset {
-  margin: 0 auto;
-  display: inline-flex;
-  padding: 20px;
-  border: 2px solid #008000;
+section.gallery > div.image {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+  width: 300px;
+  height: 300px;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
      0px 10px 20px rgba(0,0,0,0.05),
      0px 20px 20px rgba(0,0,0,0.05),
      0px 30px 20px rgba(0,0,0,0.05);
 }
 
-fieldset label {
-  text-align: left;
+section.gallery > div.image:hover {
+  border: 1px solid #777;
 }
 
-fieldset input {
-  margin-bottom: 10px;
+section.gallery > div.image img {
   width: 100%;
+  height: auto;
 }
 
-button {
-  background-color: #008000;
-  color: white;
+section.gallery > h2 {
+  font-size: 80px;
+  font-family: 'Lobster', cursive;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
-table {
-  border-collapse: collapse;
-  border-bottom: 2px solid #008000;
+/* article, article > div, section.contact, section.contact > div {
+  outline: 1px solid green;
+} */
+
+article {
+  width: 100%;
+  background-color: #eee;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
      0px 10px 20px rgba(0,0,0,0.05),
      0px 20px 20px rgba(0,0,0,0.05),
      0px 30px 20px rgba(0,0,0,0.05);
 }
 
-td {
-  border: 1px solid #999;
-  padding: 0.5rem;
-  text-align: left;
+
+article > div.info-wrapper {
+  width: 860px;
+  height: 300px;
+  margin: auto;
 }
 
-td, th {
-  border: 1px solid #ddd;
-  padding: 8px;
+article > div.info-wrapper > section {
+  width: 400px;
+  height: 300px;
+  float: left;
 }
 
-th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #008000;
-  color: white;
+article > div.info-wrapper > section > h3 {
+  font-size: 80px;
+  font-family: 'Lobster', cursive;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
-tr:nth-child(even) { 
-  background-color: #f2f2f2;
+article > div.info-wrapper > section:first-child {
+  margin-right: 30px;
 }
 
-tr:hover { 
-  background-color: #ddd;
-  transition: all 0.6s;
-  -webkit-transition: all 0.6s;
-  -o-transition: all 0.6s;
-  -moz-transition: all 0.6s;
+article > div.info-wrapper > section:nth-child(2) {
+  margin-left: 30px;
 }
 
+article > div.info-wrapper > section ul {
+  padding-left: 136px;
+  font-size: 23px;
+}
+
+article > div.info-wrapper > section ul > li {
+  list-style-type: none;
+}
+
+section.contact {
+  margin-bottom: 60px;
+  margin-top: 40px;
+  clear: both;
+  height: 200px;
+  background-color: #eee;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+     0px 10px 20px rgba(0,0,0,0.05),
+     0px 20px 20px rgba(0,0,0,0.05),
+     0px 30px 20px rgba(0,0,0,0.05);
+}
+
+section.contact > div {
+  width: 400px;
+  height: 200px;
+  margin: auto;
+  text-align: center;
+  padding-top: 20px;
+}
+
+section.contact > div > h4 {
+  font-size: 30px;
+  font-family: 'Lobster', cursive;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+section.contact > div ul {
+  padding-inline-start: 0px;
+}
+
+section.contact > div ul > li {
+  list-style-type: none;
+  display: inline;
+}
+
+section.contact > div ul > li > img {
+  width: 45px;
+  margin-top: 5px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+section.goodbye {
+  margin-bottom: 150px;
+  text-align: center;
+}
+
+section.goodbye > h5 {
+  font-size: 30px;
+  font-family: 'Lobster', cursive;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* footer - index.html & sales.html */
 footer {
   color: white;
   position: fixed;
