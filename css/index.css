@@ -110,23 +110,7 @@ header nav span.nav-links a img:hover, header nav span.logo img:hover {
 /* Referene - End */
 
 main.intro {
-  margin-top: 100px;
-}
-
-main.intro > h2 {
-  font-size: 50px;
-  font-family: 'Lobster', cursive;
-  margin-bottom: 0px;
-  margin-top: 120px;
-  text-align: center;
-}
-
-main.intro h1 {
-  font-size: 115px;
-  font-family: 'Lobster', cursive;
-  margin-top: 0px;
-  margin-bottom: 20px;
-  text-align: center;
+  margin-top: 80px;
 }
 
 section.salmon-img img {
@@ -134,7 +118,7 @@ section.salmon-img img {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 120px;
-  width: 800px;
+  width: 725px;
 }
 
 section.gallery {
@@ -182,6 +166,8 @@ section.gallery > h2 {
 
 article {
   width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
   background-color: #eee;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
      0px 10px 20px rgba(0,0,0,0.05),
@@ -263,11 +249,18 @@ section.contact > div ul > li {
   display: inline;
 }
 
-section.contact > div ul > li > img {
+section.contact > div ul > li > a > img {
   width: 45px;
   margin-top: 5px;
   margin-left: 6px;
   margin-right: 6px;
+  border-radius: 5px;
+}
+
+section.contact > div ul > li > a > img:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  transition: 1ms;
+  transition-timing-function: ease-in;
 }
 
 section.goodbye {
