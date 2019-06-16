@@ -1,11 +1,11 @@
 'use strict';
 
+// GLOBAL variables
+// ----------------------------------------------------------
 // Get the container element where I display all locations
 var locationsTable = document.getElementById('locations-table');
-
 // Hours of operation 6am - 8pm
 var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
-
 // Store each location object into array
 var allLocationsArray = [];
 
@@ -30,12 +30,14 @@ var LocationStore = function(
 
 // Generates random number between maxHourlyCustomers & minHourlyCustomers
 // The max & min are inclusive;
+// ----------------------------------------------------------
 LocationStore.prototype.calculateNumberOfCustomers = function() {
   return Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
 };
 
 // Number of cookies per hour; round to nearest whole number
 // Save data to totalCookiesSoldPerHour array
+// ----------------------------------------------------------
 LocationStore.prototype.calculateCookiesSoldPerHour = function() {
   // Generate random number of customers
   var customersPerHour = this.calculateNumberOfCustomers();
@@ -47,8 +49,9 @@ LocationStore.prototype.calculateCookiesSoldPerHour = function() {
 };
 
 // Calculate how many cookies were sold during the hours of operations (6am - 8am)
+// ----------------------------------------------------------
 LocationStore.prototype.calculateTotalCookiesSold = function(cookies) {
-  this.totalCookiesSold += cookies;
+  return this.totalCookiesSold += cookies;
 };
 
 // Data - Create store data for location
@@ -63,131 +66,105 @@ LocationStore.prototype.makeData = function() {
   }
 };
 
-// Create table headers 6am - 8pm
-function createTableHoursOfOperationTh() {
-  var tableTr, tableTh;
+// HTML element creator function!
+// ----------------------------------------------------------
+function createTableElement(parent, el, content) {
+  var child = document.createElement(el);
 
+  if (content) {
+    child.textContent = content;
+  }
+
+  parent.appendChild(child);
+
+  return child;
+}
+
+// Create table headers 6am - 8pm
+// ----------------------------------------------------------
+function createTableHoursOfOperationTh() {
   // Create table row (tr) element
-  tableTr = document.createElement('tr');
-  locationsTable.appendChild(tableTr);
+  var tableTr = createTableElement(locationsTable, 'tr', false);
+
   // Create empty header element
-  tableTh = document.createElement('th');
-  tableTr.appendChild(tableTh);
+  createTableElement(tableTr, 'th', false);
 
   // Iterate through hours of operation to create table header (th) elements displaying 6am - 8pm
   for (var i = 0; i < hoursOfOperation.length; i++) {
-    tableTh = document.createElement('th');
-    tableTh.textContent = hoursOfOperation[i];
-    tableTr.appendChild(tableTh);
+    createTableElement(tableTr, 'th', hoursOfOperation[i]);
   }
 
-  // Create Totals column
-  tableTh = document.createElement('th');
-  tableTh.textContent = 'Daily Location Total';
-  tableTr.appendChild(tableTh);
+  // Create Daily Location Total column
+  createTableElement(tableTr, 'th', 'Daily Location Total');
 }
 
 // Create table Locaton data; Cookies per hour of operation
+// ----------------------------------------------------------
 function createTableCookiesPerHourTd() {
-  var tableTd, tableTr;
-
   // Iterate through to populate table data rows
   for (var j = 0; j < allLocationsArray.length; j++) {
     // Create new tr
-    tableTr = document.createElement('tr');
+    var tableTr = document.createElement('tr');
     locationsTable.appendChild(tableTr);
 
     // Add new td for location name
-    tableTd = document.createElement('td');
-    tableTd.textContent = allLocationsArray[j].name;
-    tableTr.appendChild(tableTd);
+    createTableElement(tableTr, 'td', allLocationsArray[j].name);
 
     // Add new td for each cookies sold per hour data point
     for (var k = 0; k < allLocationsArray[j].totalCookiesSoldPerHour.length; k++) {
-      tableTd = document.createElement('td');
-      tableTd.textContent = allLocationsArray[j].totalCookiesSoldPerHour[k];
-      tableTr.appendChild(tableTd);
+      createTableElement(tableTr, 'td', allLocationsArray[j].totalCookiesSoldPerHour[k]);
     }
 
     // Add new td for "Daily Location Total"
-    tableTd = document.createElement('td');
-    tableTd.textContent = allLocationsArray[j].totalCookiesSold;
-    tableTr.appendChild(tableTd);
+    createTableElement(tableTr, 'td', allLocationsArray[j].totalCookiesSold);
   }
 }
 
 // Caluclation Hourly totals of cookies sold between all locations
+// ----------------------------------------------------------
 function calculateAllLocationsCookiesPerHour() {
-  var count = 1;
-  var calcArr = [];
-  var multiArr = [];
-  var sum = [];
+  var totals = [];
   var total = 0;
-  var completeTotal = 0;
+  for (var i = 0; i < allLocationsArray[0].totalCookiesSoldPerHour.length; i++) {
+    var sum = 0;
 
-  // Create array of empty arrays. ex. [[], [], []]
-  while (count <= allLocationsArray[0].totalCookiesSoldPerHour.length) {
-    calcArr.push([]);
-    count++;
-  }
-
-  // Store each location cookie data inside an array
-  for (var l = 0; l < allLocationsArray.length; l++) {
-    multiArr.push(allLocationsArray[l].totalCookiesSoldPerHour);
-  }
-
-  // Store arrays with the hourly cookies sold from all locations
-  // ex. [[1,2,3], [4,5,6], [7,8,9]] -> [[1,4,7], [2,5,8], [3,6,9]]
-  for (var m = 0; m < multiArr.length; m++) {
-    for (var n = 0; n < multiArr[m].length; n++) {
-      calcArr[n].push(multiArr[m][n]);
-    }
-  }
-
-  // Sum totals from the array of arrays containing hourly cookies sold from all locations 
-  for (m = 0; m < calcArr.length; m++) {
-    for (n = 0; n < calcArr[m].length; n++) {
-      total += calcArr[m][n];
-      completeTotal += calcArr[m][n];
+    for (var j = 0; j < allLocationsArray.length; j++) {
+      sum += allLocationsArray[j].totalCookiesSoldPerHour[i];
     }
 
-    sum.push(total);
-    total = 0;
+    totals.push(sum);
+    total += sum;
   }
 
-  return [sum, completeTotal];
+  return [totals, total];
 }
 
 // Create table totals td
+// ----------------------------------------------------------
 function createTableTotalsTd() {
-  var tableTr, tableTd;
-  // Hourly totals from all locations
-  // Create new tr
-  tableTr = document.createElement('tr');
-  locationsTable.appendChild(tableTr);
+  // Create new tr for all locations hourly totals
+  var tableTr = createTableElement(locationsTable, 'tr', false);
 
   // Add new td for location name
-  tableTd = document.createElement('td');
-  tableTd.textContent = 'Totals';
-  tableTr.appendChild(tableTd);
+  createTableElement(tableTr, 'td', 'Totals');
 
-  var sum = calculateAllLocationsCookiesPerHour()[0];
-  var completeTotal = calculateAllLocationsCookiesPerHour()[1];
+  // Get totals from function
+  var result = calculateAllLocationsCookiesPerHour();
+  var totals = result[0];
+  var total = result[1];
 
   // Add totals to the last row
-  for (var i = 0; i < sum.length; i++) {
-    tableTd = document.createElement('td');
-    tableTd.textContent = sum[i];
-    tableTr.appendChild(tableTd);
+  for (var i = 0; i < totals.length; i++) {
+    createTableElement(tableTr, 'td', totals[i]);
   }
 
   // Add Daily Location Total
-  tableTd = document.createElement('td');
-  tableTd.textContent = completeTotal;
-  tableTr.appendChild(tableTd);
+  createTableElement(tableTr, 'td', total);
 }
 
-// Let's put our DOM functions into work!
+// Let's put our DOM creater functions into work!
+// Create HTML table with data!
+// ----------------------------------------------------------
 function createTableDomElements() {
 
   createTableHoursOfOperationTh();
@@ -198,6 +175,7 @@ function createTableDomElements() {
 }
 
 // Create the locations data and store the data in the allLocationsArray
+// ----------------------------------------------------------
 function locationCreator() {
   var locations = [
     new LocationStore('1st and Alki', 23, 65, 6.3, [], 0),
@@ -229,6 +207,7 @@ var Store = function(name, min, max, avg){
 var storeForm = document.getElementById('store');
 
 // Add eventlistener to the form
+// ----------------------------------------------------------
 storeForm.addEventListener('submit', function(event){
   event.preventDefault();
 
@@ -275,6 +254,7 @@ storeForm.addEventListener('submit', function(event){
   // Clear all form inputs
   storeForm.reset();
 
+  // Toggle the add new form to either hide or show
   toggleDisplayClass.classList.toggle('toggle-form');
 
   // Display the new table to the DOM
@@ -285,15 +265,16 @@ storeForm.addEventListener('submit', function(event){
 var storeLink = document.getElementById('toggle-store-form');
 var toggleDisplayClass = document.querySelector('.store-container');
 
+// Toggle event handler
+// ----------------------------------------------------------
 var handleFormToggle = function(event) {
   event.preventDefault();
 
   toggleDisplayClass.classList.toggle('toggle-form');
 };
 
+// Create toggle event listener
 storeLink.addEventListener('click', handleFormToggle);
-
-
 
 // Call the location creator function to create DOM elements!
 locationCreator();
