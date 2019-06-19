@@ -47,13 +47,13 @@
           <input type="text" name="name" required>
   
           <label for="min">Minimum Customers Per Hour</label>
-          <input type="text" name="min" required>
+          <input type="number" name="min" min="1" max="1000" required>
   
           <label for="max">Maximum Customers Per Hour</label>
-          <input type="text" name="max" required>
+          <input type="number" name="max" min="1" max="1000" required>
   
           <label for="avg">Average Cookies Per Customer</label>
-          <input type="text" name="avg" required>
+          <input type="number" name="avg" min="1" max="1000" required>
   
           <button type="submit">Submit</button>
         </fieldset>

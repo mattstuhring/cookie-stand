@@ -193,16 +193,6 @@ function locationCreator() {
   createTableDomElements();
 }
 
-// **********************************************************
-// Constructor - Store
-// **********************************************************
-var Store = function(name, min, max, avg){
-  this.name = name;
-  this.min = min;
-  this.max = max;
-  this.avg = avg;
-};
-
 // Save the form element in a variable
 var storeForm = document.getElementById('store');
 
@@ -217,32 +207,8 @@ storeForm.addEventListener('submit', function(event){
   var max = parseInt(event.target.max.value);
   var avg = parseInt(event.target.avg.value);
 
-  // Form validation!!!!!
-  if (name === '' || typeof name !== 'string') {
-    alert('Please enter a valid string');
-    return;
-  }
-
-  if (min < 0 || typeof min !== 'number' || min >= max) {
-    alert('Please enter number greater or equal to 0 and must be less than maximum');
-    return;
-  }
-
-  if (max < 0 || typeof max !== 'number' || max <= min) {
-    alert('Please enter number greater than the minimum');
-    return;
-  }
-
-  if (avg <= 0 || typeof avg !== 'number') {
-    alert('Please enter a number greater than 0');
-    return;
-  }
-
-  // Create new Store objec from the new form data
-  var formData = new Store(name, min, max, avg);
-
   // Create a new store
-  var newStore = new LocationStore(formData.name, formData.min, formData.max, formData.avg, [], 0);
+  var newStore = new LocationStore(name, min, max, avg, [], 0);
   newStore.makeData(); // Create store data; Cookies sold per hour ...
 
   // Add new store to the global all locations array
